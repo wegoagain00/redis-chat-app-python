@@ -10,5 +10,5 @@ You can check out my blog for a detailed explanation of the DevOps journey and t
 
 - [Part 1: Running the Chat Application Manually](https://wegoagain00.vercel.app/posts/python-chat-app-part-1)
 - [Part 2: Containerising the Chat Application using Docker](https://wegoagain00.vercel.app/posts/python-chat-app-part-2)
-- [Part 3: Implementing CI using GitHub Actions and pushing to AWS ECR](pending)
+- [Part 3: Implementing CI using GitHub Actions and pushing to AWS ECR](https://wegoagain00.vercel.app/posts/python-chat-app-part-3)
 - [Part 4: Deploying to Kubernetes with Terraform and EKS](pending)
