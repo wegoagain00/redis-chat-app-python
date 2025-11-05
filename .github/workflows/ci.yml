@@ -1,0 +1,47 @@
+name: Build and Push Docker Image to ECR
+
+# 1. This is the trigger
+on:
+  push:
+    branches: ["master"] # Runs every time I push to the master branch (yours could be main)
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest # Use a standard Linux runner
+
+    # 2. These are the environment variables for the whole job
+    env:
+      AWS_REGION: eu-west-2 # My AWS region
+      ECR_REPOSITORY: my-chat-app # The name of my ECR repo
+      # This will be the full AWS URI, e.g., 12345.dkr.ecr.eu-west-2.amazonaws.com
+      ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+
+    steps:
+      # 3. Get my code
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      # 4. Log in to AWS
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # 5. Log the Docker client in to the ECR registry
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+
+      # 6. Build, tag, and push the image
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # We'll tag the image with 'latest' and also the git commit hash
+          tags: |
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
