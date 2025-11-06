@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: redis-db # This label is how the Service will find these pods
+spec:
+  replicas: 1 # We only need one copy of our database
+  selector:
+    matchLabels:
+      app: redis-db # Match the pods with the label "app: redis-db"
+  template:
+    metadata:
+      labels:
+        app: redis-db # Apply this label to the pod(s)
+    spec:
+      containers:
+        - name: redis
+          image: redis:latest # The official public image from Docker Hub
+          ports:
+            - containerPort: 6379 # The default port Redis listens on
