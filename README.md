@@ -14,4 +14,5 @@ You can check out my blog for a detailed explanation of the DevOps journey and t
 - [Part 4: Deploying to Kubernetes with `eksctl`](https://wegoagain00.vercel.app/posts/python-chat-app-part-4)
 
 
-<video width="650" height="300" src="/python-chat-app/demo-python-redis-app.mp4"></video>
+https://github.com/user-attachments/assets/091369a6-07af-4a6f-b870-e461a5c38f3b
+
